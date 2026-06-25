@@ -1732,64 +1732,6 @@ def check_key(key):
             exp_date = exp_date.strip()
 
             # MATCH KEY
-            if saved_key.strip() == key.strip():
-
-                try:
-                    exp = datetime.strptime(
-                        exp_date,
-                        "%d-%m-%Y %I:%M %p"
-                    )
-
-                except:
-                    return "not", None, None
-# ================= LIVE CHECK KEY =================
-
-def check_key(key):
-
-    try:
-
-        headers = {
-            "Cache-Control": "no-cache",
-            "Pragma": "no-cache"
-        }
-
-        response = requests.get(
-            APPROVED_URL,
-            headers=headers,
-            timeout=10
-        )
-
-        data = response.json()
-
-        content = base64.b64decode(
-            data["content"]
-        ).decode()
-
-        lines = content.splitlines()
-
-        print("DEBUG: TOTAL LINES =", len(lines))
-        print("DEBUG: INPUT KEY =", key)
-
-        now = datetime.now()
-
-        for line in lines:
-
-            print("DEBUG RAW LINE:", line)
-
-            line = line.strip()
-
-            if "|" not in line:
-                continue
-
-            saved_key, exp_date = line.split("|", 1)
-
-            print("DEBUG SAVED KEY:", saved_key.strip())
-            print("DEBUG EXP DATE:", exp_date.strip())
-
-            saved_key = saved_key.strip()
-            exp_date = exp_date.strip()
-
-            # MATCH KEY
             if saved_key == key.strip():
 
                 try:
