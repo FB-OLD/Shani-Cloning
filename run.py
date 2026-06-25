@@ -1688,102 +1688,101 @@ def get_device_key():
 
 def check_key(key):
 
-try:
+    try:
 
-    headers = {
-        "Cache-Control": "no-cache",
-        "Pragma": "no-cache"
-    }
+        headers = {
 
-    response = requests.get(
-        APPROVED_URL,
-        headers=headers,
-        timeout=10
-    )
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache"
 
-    content = response.text
+        }
 
-    lines = content.splitlines()
+        response = requests.get(
+            APPROVED_URL,
+            headers=headers,
+            timeout=10
+        )
 
-    print("DEBUG: TOTAL LINES =", len(lines))
-    print("DEBUG: INPUT KEY =", key)
+        content = response.text
 
-    now = datetime.now()
+        lines = content.splitlines()
+        print("DEBUG: TOTAL LINES =", len(lines))
+        print("DEBUG: INPUT KEY =", key)
 
-    for line in lines:
+        now = datetime.now()
 
-        print("DEBUG RAW LINE:", line)
+        for line in lines:
 
-        line = line.strip()
+            print("DEBUG RAW LINE:", line)
 
-        if "|" not in line:
-            continue
+            line = line.strip()
 
-        saved_key, exp_date = line.split("|", 1)
+            if "|" not in line:
+                continue
 
-        print("DEBUG SAVED KEY:", saved_key.strip())
-        print("DEBUG EXP DATE:", exp_date.strip())
+            saved_key, exp_date = line.split("|", 1)
 
-        saved_key = saved_key.strip()
-        exp_date = exp_date.strip()
+            print("DEBUG SAVED KEY:", saved_key.strip())
+            print("DEBUG EXP DATE:", exp_date.strip())
 
-        # MATCH KEY
-        if saved_key == key.strip():
+            saved_key = saved_key.strip()
+            exp_date = exp_date.strip()
 
-            try:
+            # MATCH KEY
+            if saved_key.strip() == key.strip():
 
-                exp = datetime.strptime(
-                    exp_date,
-                    "%d-%m-%Y %I:%M %p"
-                )
+                try:
 
-            except:
+                    exp = datetime.strptime(
+                        exp_date,
+                        "%d-%m-%Y %I:%M %p"
+                    )
 
-                return "not", None, None
+                except:
 
-            # APPROVED
-            if now <= exp:
+                    return "not", None, None
 
-                remaining = exp - now
+                # APPROVED
+                if now <= exp:
 
-                days = remaining.days
+                    remaining = exp - now
 
-                hours = (
-                    remaining.seconds // 3600
-                )
+                    days = remaining.days
 
-                minutes = (
-                    remaining.seconds % 3600
-                ) // 60
+                    hours = (
+                        remaining.seconds // 3600
+                    )
 
-                left = (
-                    f"{days}D "
-                    f"{hours}H "
-                    f"{minutes}M"
-                )
+                    minutes = (
+                        remaining.seconds % 3600
+                    ) // 60
 
-                return (
-                    "approved",
-                    exp_date,
-                    left
-                )
+                    left = (
+                        f"{days}D "
+                        f"{hours}H "
+                        f"{minutes}M"
+                    )
 
-            # EXPIRED
-            else:
+                    return (
+                        "approved",
+                        exp_date,
+                        left
+                    )
 
-                return (
-                    "expired",
-                    exp_date,
-                    "0D 0H 0M"
-                )
+                # EXPIRED
+                else:
 
-    return "not", None, None
+                    return (
+                        "expired",
+                        exp_date,
+                        "0D 0H 0M"
+                    )
 
-except Exception as e:
+        return "not", None, None
 
-    print("DEBUG ERROR:", e)
+    except:
 
-    return "not", None, None
+        return "not", None, None
 # ================= ACCESS DENIED =================
 
 def access_denied_block(key, status, exp=None):
