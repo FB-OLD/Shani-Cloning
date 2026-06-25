@@ -1063,13 +1063,13 @@ def old_clone():
 
         old_One()
         
-   elif _input in ('4', '04', 'd', 'D'):
+    elif _input in ('4', '04', 'd', 'D'):
     
         menu_clear()
    
         old_Two()
         
-   elif _input in ('5', '05', 'e', 'E'):
+    elif _input in ('5', '05', 'e', 'E'):
     
         menu_clear()
    
