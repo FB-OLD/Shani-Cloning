@@ -1684,7 +1684,7 @@ def get_device_key():
 
     return final
 
-================= LIVE CHECK KEY =================
+# ================= LIVE CHECK KEY =================
 
 def check_key(key):
 
